@@ -27,7 +27,7 @@ jobs:
           flutter build apk --release
 
       - name: upload apk
-        uses: action/upload-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
           name: messa-chat-app
           path: messa_chat/build/app/outputs/flutter-apk/app-release.apk
