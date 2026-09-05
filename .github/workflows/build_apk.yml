@@ -1,0 +1,34 @@
+name: build test adr
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: install dependencies
+        run: |
+          cd messa_chat
+          flutter pub get
+
+      - name: build apk
+        run: |
+          cd messa_chat
+          flutter build apk --release
+
+      - name: upload apk
+        uses: action/upload-artifact@v4
+        with:
+          name: messa-chat-app
+          path: messa_chat/build/app/outputs/flutter-apk/app-release.apk
+          
