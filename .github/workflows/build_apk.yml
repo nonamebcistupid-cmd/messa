@@ -8,6 +8,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defualts:
+      run:
+        working-directory: messa_chat
+        
     steps:
       - uses: actions/checkout@v4
 
