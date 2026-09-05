@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-void main() async{
+void main() async {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
     runApp(const messaChat());
@@ -34,7 +34,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
     final TextEditingController _controller = TextEditingController();
-    final DatabaseRefernce _dbRef = FirebaseDataabse.instance.ref("messages");
+    final DatabaseReference _dbRef = FirebaseDatabase.instance.ref("messages");
     final List<Map<String, String>> _messages = [];
 
     @override
@@ -44,11 +44,12 @@ class _ChatScreenState extends State<ChatScreen> {
             final data = Map<String, dynamic>.from(event.snapshot.value as Map);
             setState(() {
                 _messages.add({
-                    "sender": data["sender"] ?? "ano"
+                    "sender": data["sender"] ?? "ano",
                     "text": data["text"] ?? "",
+                });
             });
         });
-    });
+    };
 }
 
 void _sendMessage() {
@@ -57,7 +58,7 @@ void _sendMessage() {
     _dbRef.push().set({
         "sender": "trznhien",
         "text": _controller.text.trim(),
-        "timestamp": DateTime.now().milisecondsSinceEpoch,
+        "timestamp": DateTime.now().millisecondsSinceEpoch,
     });
 
     _controller.clear();
@@ -99,7 +100,7 @@ Widget build(BuildContext context) {
                                             ),
                                             const SizedBox(height: 2),
                                             Text(
-                                                msg["text"]!
+                                                msg["text"]!,
                                                 style: const TextStyle(fontSize: 15, color: Colors.white),
                                             ),
                                         ],
@@ -136,5 +137,4 @@ Widget build(BuildContext context) {
             ],
         ),
     ),
-}
 }
